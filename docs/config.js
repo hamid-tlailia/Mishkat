@@ -5,7 +5,7 @@
 window.MISHKAT = {
   // عنوان وركر كلاودفلير الذي يحمل المفتاح (انظر worker.js و README).
   // مثال: "https://mishkat.hamid.workers.dev"
-  proxy: "",
+  proxy: "https://mishkat-api.tlhamid18.workers.dev",
 
   // وسيط اختياري لتخريج الأحاديث من الدرر السنية (تجاوز حاجز CORS).
   // اتركه فارغًا إن لم تُعدّه؛ حينها تُتحقّق الآيات فقط.
