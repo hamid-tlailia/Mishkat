@@ -1,22 +1,30 @@
 /*
  * عامل الخدمة — يجعل مِشْكاة تُثبَّت كتطبيق وتفتح بلا إنترنت.
  *
- * القاعدة الحاكمة: لا يُخزَّن إلا هيكل التطبيق.
- * أمّا الأجوبة وتخريج الأحاديث ونصوص الآيات فتُطلب من الشبكة دائمًا،
- * لأن جوابًا شرعيًا مخزّنًا قد يُعرض في سياق غير سياقه.
+ * قاعدتان تحكمان هذا الملف:
+ *
+ * ١) الشبكة أولًا في كل شيء، والمخزَّن احتياط عند الانقطاع.
+ *    السبب: ملفات التطبيق تحمل أسماء ثابتة بلا بصمة، فلو قدّمنا المخزَّن
+ *    لبقيت نسخة قديمة عالقة في هواتف الناس بعد كل تحديث.
+ *
+ * ٢) لا تُخزَّن الأجوبة ولا نصوص الأدلّة إطلاقًا، بل هيكل التطبيق وحده.
+ *    جوابٌ شرعيّ محفوظ قد يُقرأ لاحقًا في غير سياق سؤاله.
+ *
+ * بعد أي تعديل هنا: ارفع رقم VERSION، وإلا بقي القديم عند من ثبّتوا التطبيق.
  */
 
 const VERSION = "mishkat-v1";
 const SHELL = `${VERSION}-shell`;
 
-/* ملفات الهيكل. تُطلب بمسارات نسبية ليعمل التطبيق تحت أي مجلّد */
 const SHELL_FILES = [
   "./",
   "./index.html",
+  "./app.js",
+  "./config.js",
   "./manifest.webmanifest",
-  "./icons/icon-192.png",
-  "./icons/icon-512.png",
-  "./icons/icon-maskable-512.png",
+  "./icon-192.png",
+  "./icon-512.png",
+  "./icon-maskable-512.png",
 ];
 
 self.addEventListener("install", (e) => {
@@ -24,8 +32,8 @@ self.addEventListener("install", (e) => {
     caches
       .open(SHELL)
       .then((c) => c.addAll(SHELL_FILES))
+      .catch(() => {})
       .then(() => self.skipWaiting())
-      .catch(() => self.skipWaiting())
   );
 });
 
@@ -50,46 +58,22 @@ self.addEventListener("fetch", (e) => {
 
   const url = new URL(req.url);
 
-  /* ما ليس من أصل التطبيق (الوركر، المصحف، الدرر) يُترك للشبكة */
+  /* الوركر والمصحف والدرر: للشبكة وحدها، لا تُخزَّن */
   if (url.origin !== self.location.origin) return;
 
-  /*
-   * config.js من الشبكة أولًا: لو خُزّن، لبقي عنوان وركر قديم عالقًا
-   * في هواتف الناس بعد تغييره، فيتعطّل التطبيق عندهم بلا سبب ظاهر.
-   */
-  if (url.pathname.endsWith("/config.js")) {
-    e.respondWith(
-      fetch(req)
-        .then((res) => {
+  e.respondWith(
+    fetch(req)
+      .then((res) => {
+        if (res.ok && res.type === "basic") {
           const copy = res.clone();
           caches.open(SHELL).then((c) => c.put(req, copy));
-          return res;
-        })
-        .catch(() => caches.match(req))
-    );
-    return;
-  }
-
-  /* التنقّل: الشبكة أولًا، فإن انقطعت فالصفحة المخزّنة */
-  if (req.mode === "navigate") {
-    e.respondWith(
-      fetch(req).catch(() => caches.match("./index.html").then((r) => r || caches.match("./")))
-    );
-    return;
-  }
-
-  /* بقيّة الأصول: المخزَّن أولًا لأن أسماءها تحمل بصمة المحتوى */
-  e.respondWith(
-    caches.match(req).then(
-      (hit) =>
-        hit ||
-        fetch(req).then((res) => {
-          if (res.ok && res.type === "basic") {
-            const copy = res.clone();
-            caches.open(SHELL).then((c) => c.put(req, copy));
-          }
-          return res;
-        })
-    )
+        }
+        return res;
+      })
+      .catch(() =>
+        caches
+          .match(req)
+          .then((hit) => hit || (req.mode === "navigate" ? caches.match("./index.html") : undefined))
+      )
   );
 });
