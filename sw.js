@@ -13,7 +13,7 @@
  * بعد أي تعديل هنا: ارفع رقم VERSION، وإلا بقي القديم عند من ثبّتوا التطبيق.
  */
 
-const VERSION = "mishkat-v2";
+const VERSION = "mishkat-v4";
 const SHELL = `${VERSION}-shell`;
 
 const SHELL_FILES = [
