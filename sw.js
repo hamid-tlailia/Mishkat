@@ -23,10 +23,11 @@ const BUILD = new URL(self.location.href).searchParams.get("v") || "0";
 const VERSION = `mishkat-${BUILD}`;
 const SHELL = `${VERSION}-shell`;
 
+/* app.js يُطلب موسومًا ببصمة البناء، فيُخزَّن بالرابط نفسه الذي تطلبه الصفحة */
 const SHELL_FILES = [
   "./",
   "./index.html",
-  "./app.js",
+  `./app.js?v=${BUILD}`,
   "./config.js",
   "./manifest.webmanifest",
   "./icon-192.png",
