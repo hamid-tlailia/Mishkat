@@ -45,7 +45,7 @@
       // يُسجَّل بعد التحميل حتى لا يزاحم أول رسم للصفحة
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", function () {
-          navigator.serviceWorker.register("./sw.js").catch(function () {
+          navigator.serviceWorker.register("./sw.js?v=202608150327").catch(function () {
             /* التطبيق يعمل بدونه، لكنه لا يُثبَّت ولا يفتح دون إنترنت */
           });
         });
