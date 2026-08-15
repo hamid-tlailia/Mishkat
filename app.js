@@ -480,20 +480,21 @@ Error generating stack: `+i.message+`
   flex:1 1 auto;min-width:0;background:none;border:none;resize:none;color:var(--text);
   caret-color:var(--accent);
   /*
-   * لا يكفي text-align: المحاذاة تنقل النصّ، والاتجاه ينقل مؤشّر الكتابة.
-   * بدونه يبقى الحقل إنجليزيّ الاتجاه فيقف المؤشّر عند الطرف الأيسر
-   * ملاصقًا لزر الإرسال، فيبدو خطًّا أبيض غريبًا قبل الكتابة.
-   */
-  /*
-   * direction وحده هو ما ينقل مؤشّر الكتابة إلى اليمين.
-   * ولا يُستعمل unicode-bidi:plaintext هنا: فهو يستنتج الاتجاه من أول حرف
-   * قويّ في النصّ، والحقل الفارغ لا حرف فيه، فيرتدّ إلى اليسار
-   * ويقف المؤشّر ملاصقًا للأزرار كخطّ أبيض غريب.
+   * direction هو ما ينقل مؤشّر الكتابة إلى اليمين، لا text-align وحده.
+   * ولا يُستعمل معه unicode-bidi:plaintext: فهو يستنتج الاتجاه من أول حرف
+   * قويّ، والحقل الفارغ لا حرف فيه، فيرتدّ إلى اليسار.
    */
   direction:rtl;text-align:right;
   font-family:var(--fq);font-size:calc(16.5px*var(--fs));line-height:1.75;
   padding:9px 12px;max-height:124px;
+  /*
+   * إخفاء شريط التمرير: في الاتجاه من اليمين لليسار يرسمه أندرويد على الحافة
+   * اليسرى، فيظهر خطًّا عموديًّا فاتحًا ملاصقًا للأزرار يبدو خللًا في التصميم.
+   * والحقل يبقى قابلًا للتمرير باللمس وبالمؤشّر.
+   */
+  scrollbar-width:none;-ms-overflow-style:none;
 }
+.mk-input::-webkit-scrollbar{width:0;height:0;display:none;}
 .mk-input::placeholder{color:var(--dim);opacity:.65;}
 
 /* زر الإرسال داخل الصندوق، على منتصف محوره تمامًا */
