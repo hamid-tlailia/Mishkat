@@ -36,7 +36,7 @@
       .boot { height: 100dvh; display: grid; place-items: center; color: #9EAAA2;
               font-family: system-ui, sans-serif; font-size: 14px; }
     </style>
-    <script type="module" crossorigin src="./app.js?v=202608150343"></script>
+    <script type="module" crossorigin src="./app.js?v=202608150356"></script>
   </head>
   <body>
     <div id="root"><div class="boot">تُفتح مِشْكاة…</div></div>
@@ -45,7 +45,7 @@
       // يُسجَّل بعد التحميل حتى لا يزاحم أول رسم للصفحة
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", function () {
-          navigator.serviceWorker.register("./sw.js?v=202608150343").catch(function () {
+          navigator.serviceWorker.register("./sw.js?v=202608150356").catch(function () {
             /* التطبيق يعمل بدونه، لكنه لا يُثبَّت ولا يفتح دون إنترنت */
           });
 
