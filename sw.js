@@ -69,8 +69,20 @@ self.addEventListener("fetch", (e) => {
   /* الوركر والمصحف والدرر: للشبكة وحدها، لا تُخزَّن */
   if (url.origin !== self.location.origin) return;
 
+  /*
+   * الصفحة وملف الإعداد يُطلبان بتجاوز ذاكرة المتصفح.
+   * السبب: GitHub Pages ترسل ترويسة تخزين لعشر دقائق، فكان fetch يُرجع
+   * نسخة قديمة من index.html رغم أن الاستراتيجية «الشبكة أولًا»، فيبقى
+   * المستخدم على بناء سابق ويظنّ أن الرفع لم ينجح.
+   * أما app.js فرابطه يحمل بصمة البناء، فالتخزين عليه لا يضرّ.
+   */
+  const fresh = req.mode === "navigate" || url.pathname.endsWith("/config.js");
+  const request = fresh
+    ? new Request(url.href, { cache: "no-cache", credentials: "same-origin" })
+    : req;
+
   e.respondWith(
-    fetch(req)
+    fetch(request)
       .then((res) => {
         if (res.ok && res.type === "basic") {
           const copy = res.clone();
