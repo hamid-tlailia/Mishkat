@@ -113,7 +113,7 @@ Error generating stack: `+i.message+`
 
 .mk{
   height:var(--mk-viewport-height,100dvh);display:flex;flex-direction:column;direction:rtl;position:relative;overflow:hidden;
-  transition:height .28s cubic-bezier(.22,.61,.36,1);will-change:height;
+  transition:height .18s cubic-bezier(.2,.7,.3,1);will-change:height;
   transform:translateY(var(--mk-viewport-offset,0px));
   background:var(--bg);color:var(--text);
   font-family:var(--fb),system-ui,sans-serif;font-size:calc(15px * var(--fs));
