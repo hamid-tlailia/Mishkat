@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content" />
     <title>مِشْكاة — للأسئلة الشرعية</title>
     <meta name="description" content="مساعد ذكاء اصطناعي يجيب عن الأسئلة الشرعية وحدها، ويقابل كل دليل بمصدره: الآيات من المصحف، والأحاديث من موسوعة الدرر السنية." />
 
@@ -32,20 +32,19 @@
 
     <style>
       /*
-       * تُمنع الصفحة نفسها من التمرير حتى لا تدفع لوحةُ المفاتيح المحتوى
-       * لأعلى فيختفي الشريط العلويّ. التمرير يجري داخل التطبيق وحده.
+       * interactive-widget=resizes-content في وسم viewport أعلاه يجعل
+       * لوحة المفاتيح تُقلّص المحتوى بدل أن تدفعه، فيبقى الشريط العلويّ.
+       * ولا يُثبَّت الجسم هنا: التثبيت كان يمنع المتصفح من إعادة الترتيب.
        */
       html, body {
         margin: 0; padding: 0; background: #04201F;
-        height: 100%; overflow: hidden;
-        position: fixed; inset: 0; width: 100%;
-        overscroll-behavior: none;
+        height: 100%; overflow: hidden; overscroll-behavior: none;
       }
       #root { height: 100%; }
       .boot { height: 100dvh; display: grid; place-items: center; color: #9EAAA2;
               font-family: system-ui, sans-serif; font-size: 14px; }
     </style>
-    <script type="module" crossorigin src="./app.js?v=202608181808"></script>
+    <script type="module" crossorigin src="./app.js?v=202608181812"></script>
   </head>
   <body>
     <div id="root"><div class="boot">تُفتح مِشْكاة…</div></div>
@@ -54,7 +53,7 @@
       // يُسجَّل بعد التحميل حتى لا يزاحم أول رسم للصفحة
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", function () {
-          navigator.serviceWorker.register("./sw.js?v=202608181808").catch(function () {
+          navigator.serviceWorker.register("./sw.js?v=202608181812").catch(function () {
             /* التطبيق يعمل بدونه، لكنه لا يُثبَّت ولا يفتح دون إنترنت */
           });
 
