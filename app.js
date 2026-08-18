@@ -112,7 +112,7 @@ Error generating stack: `+i.message+`
 @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;600&family=IBM+Plex+Sans+Arabic:wght@300;400;500&family=Noto+Kufi+Arabic:wght@300;400;500&family=Noto+Naskh+Arabic:wght@400;600&family=Reem+Kufi:wght@400;500;600&display=swap');
 
 .mk{
-  height:100%;display:flex;flex-direction:column;direction:rtl;position:relative;overflow:hidden;
+  position:absolute;inset:0;display:flex;flex-direction:column;direction:rtl;overflow:hidden;
   transition:none;will-change:auto;
   background:var(--bg);color:var(--text);
   font-family:var(--fb),system-ui,sans-serif;font-size:calc(15px * var(--fs));
