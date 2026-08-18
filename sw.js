@@ -18,7 +18,7 @@
  * حتى يُنشأ مخزن جديد عند كل نشر. وبذلك لا تعود ملفات التطبيق السابقة من
  * التخزين المؤقت بعد تفعيل الإصدار الجديد.
  */
-const RELEASE = "2026081803";
+const RELEASE = "2026081805";
 const BUILD = new URL(self.location.href).searchParams.get("v") || RELEASE;
 const VERSION = `mishkat-${BUILD}`;
 const SHELL = `${VERSION}-shell`;
